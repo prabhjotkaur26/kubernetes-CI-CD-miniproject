@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KubeDeploy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>KubeDeploy Platform</h1>
+
+<div class="container">
+    <h2>DevOps Kubernetes Project</h2>
+
+    <button onclick="loadData()">
+        Load Backend Data
+    </button>
+
+    <p id="message"></p>
+</div>
+<script>
+
+async function loadData() {
+
+    const response = await fetch('/api');
+
+    const data = await response.json();
+
+    document.getElementById('message').innerHTML =
+        data.message;
+}
+
+</script>
+
+</body>
+</html>
