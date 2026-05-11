@@ -1,2 +1,4 @@
 flask
+flask-cors
+kubernetes
 psycopg2-binary

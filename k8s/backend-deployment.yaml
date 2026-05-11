@@ -17,9 +17,10 @@ spec:
         app: backend
 
     spec:
+      serviceAccountName: backend-sa
       containers:
       - name: backend
-        image: prabhjotkaur9009/backend:v1
+        image: prabhjotkaur9009/backend:v10
 
         ports:
         - containerPort: 5000

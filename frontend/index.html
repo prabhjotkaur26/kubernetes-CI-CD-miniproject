@@ -1,32 +1,107 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>KubeDeploy</title>
+    <title>Kubernetes Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>KubeDeploy Platform</h1>
+<h1>Kubernetes Monitoring Dashboard</h1>
 
 <div class="container">
-    <h2>DevOps Kubernetes Project</h2>
 
-    <button onclick="loadData()">
-        Load Backend Data
+    <button onclick="loadPods()">
+        Load Pods
     </button>
 
-    <p id="message"></p>
+    <button onclick="loadServices()">
+        Load Services
+    </button>
+
+    <button onclick="loadDeployments()">
+        Load Deployments
+    </button>
+
+    <div id="output"></div>
+
 </div>
+
 <script>
 
-async function loadData() {
+const API = "http://localhost:5000";
 
-    const response = await fetch('/api');
+async function loadPods() {
 
-    const data = await response.json();
+    const response =
+        await fetch(`${API}/pods`);
 
-    document.getElementById('message').innerHTML =
-        data.message;
+    const data =
+        await response.json();
+
+    let html = "<h2>Pods</h2>";
+
+    data.forEach(pod => {
+
+        html += `
+            <p>
+                ${pod.name}
+                -
+                ${pod.status}
+            </p>
+        `;
+    });
+
+    document.getElementById('output').innerHTML =
+        html;
+}
+
+async function loadServices() {
+
+    const response =
+        await fetch(`${API}/services`);
+
+    const data =
+        await response.json();
+
+    let html = "<h2>Services</h2>";
+
+    data.forEach(service => {
+
+        html += `
+            <p>${service.name}</p>
+        `;
+    });
+
+    document.getElementById('output').innerHTML =
+        html;
+}
+
+async function loadDeployments() {
+
+    const response =
+        await fetch(`${API}/deployments`);
+
+    const data =
+        await response.json();
+
+    let html = "<h2>Deployments</h2>";
+
+    data.forEach(dep => {
+
+        html += `
+            <p>
+                ${dep.name}
+                -
+                Replicas:
+                ${dep.replicas}
+            </p>
+        `;
+    });
+
+    document.getElementById('output').innerHTML =
+        html;
 }
 
 </script>
